@@ -1,37 +1,67 @@
-import { Box, Flex, Grid, GridItem, Heading, Link as ChakraLink, Text } from '@chakra-ui/react'
-import { FC } from 'react'
-import { useAppSelector } from 'utils/hooks'
-import DashboardMoveData from './DashboardMoveData'
+import {
+  Box,
+  Flex,
+  Grid,
+  GridItem,
+  Heading,
+  Link as ChakraLink,
+  Text,
+} from "@chakra-ui/react";
+import { FC } from "react";
+import { useAppSelector } from "utils/hooks";
+import DashboardMoveData from "./DashboardMoveData";
+import RepertoireList from "./RepertoireList";
 
 const DashboardPage: FC = () => {
-  const { name } = useAppSelector(state => ({
-    name: state.user?.account?.username
-  }))
+  const { name } = useAppSelector((state) => ({
+    name: state.user?.account?.username,
+  }));
   return (
     <>
-      <Box mt='10px' p='5vw' pt='2vw'>
-        <Heading mb='2vw'>Welcome back, {name}</Heading>
-        <Grid templateColumns={{ base: 'repeat(1, 1fr)', lg: 'repeat(2, 1fr)' }} minH='65vh' gap={6}>
+      <Box mt="10px" p="5vw" pt="2vw">
+        <Heading mb="2vw">
+          {name && name.length !== 0 ? `Welcome back, ${name}` : "Dashboard"}
+        </Heading>
+        <Grid
+          templateColumns={{ base: "repeat(1, 1fr)", lg: "repeat(2, 1fr)" }}
+          minH="65vh"
+          gap={6}
+        >
           <GridItem>
+            <RepertoireList
+              title="White Repertoire"
+              repertoires={[{ id: "", name: "1. Quickstarter 1.e4" }]}
+              deleteRepertoire={() => {}}
+              editRepertoire={() => {}}
+              addRepertoire={() => {}}
+            />
+          </GridItem>
+          <GridItem>
+            <RepertoireList
+              title="Black Repertoire"
+              repertoires={[{ id: "", name: "1. Quickstarter vs. 1.e4" }]}
+              deleteRepertoire={() => {}}
+              editRepertoire={() => {}}
+              addRepertoire={() => {}}
+            />
+          </GridItem>
+          <GridItem colSpan={2}>
             <DashboardMoveData />
           </GridItem>
-          <GridItem />
-          <GridItem />
-          <GridItem />
         </Grid>
       </Box>
       <footer>
-        <Flex w='100%' justifyContent='center' pb='25px'>
-          <Text color='whiteText'>
-            Created by Zack Murry |{' '}
-            <ChakraLink isExternal href='https://github.com/ZackMurry/chessrs'>
+        <Flex w="100%" justifyContent="center" pb="10px">
+          <Text color="whiteText">
+            Created by David v.Knobelsdorff |{" "}
+            <ChakraLink isExternal href="https://github.com/dehlen/chessrs">
               GitHub
             </ChakraLink>
           </Text>
         </Flex>
       </footer>
     </>
-  )
-}
+  );
+};
 
-export default DashboardPage
+export default DashboardPage;

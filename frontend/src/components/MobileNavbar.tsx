@@ -1,48 +1,87 @@
-import { HamburgerIcon } from '@chakra-ui/icons'
-import { Link } from 'react-router-dom'
-import { FC } from 'react'
-import { Box, Flex, Collapse, IconButton, useBoolean, Heading } from '@chakra-ui/react'
-import theme from 'theme'
-import { useAppSelector } from 'utils/hooks'
+import { HamburgerIcon } from "@chakra-ui/icons";
+import { Link } from "react-router-dom";
+import { FC } from "react";
+import {
+  Box,
+  Flex,
+  Collapse,
+  IconButton,
+  useBoolean,
+  Heading,
+} from "@chakra-ui/react";
+import theme from "theme";
+import { useAppSelector } from "utils/hooks";
 
 const MobileNavbar: FC = () => {
-  const [isExpanded, { toggle, off }] = useBoolean(false)
-  const isAuthenticated = useAppSelector(state => state.user.account !== null)
+  const [isExpanded, { toggle, off }] = useBoolean(false);
+  const isAuthenticated = useAppSelector(
+    (state) => state.user.account !== null
+  );
 
   return (
     <header style={{ background: String(theme.colors.surface) }}>
-      <Flex h='7vh' p='12.5px 25px' w='100%' justifyContent='space-between' alignItems='center'>
-        <IconButton onClick={toggle} bg='transparent' aria-label='Open navigation' borderRadius='3px'>
-          <HamburgerIcon w='35px' h='35px' color='grayBtn' />
+      <Flex
+        h="7vh"
+        p="12.5px 25px"
+        w="100%"
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <IconButton
+          onClick={toggle}
+          bg="transparent"
+          aria-label="Open navigation"
+          borderRadius="3px"
+        >
+          <HamburgerIcon w="35px" h="35px" color="grayBtn" />
         </IconButton>
-        <Link to='/' onClick={off}>
-          <Heading as='h2' fontSize='28px' fontWeight='normal' color='whiteText'>
+        <Link to="/" onClick={off}>
+          <Heading
+            as="h2"
+            fontSize="28px"
+            fontWeight="normal"
+            color="whiteText"
+          >
             ChesSRS
           </Heading>
         </Link>
       </Flex>
       <Collapse in={isExpanded}>
-        <Box bg='surface' pb='10px'>
-          <Link to='/create' onClick={toggle}>
-            <Heading as='h4' fontSize='24px' fontWeight='normal' ml='25px' color='whiteText'>
+        <Box bg="surface" pb="10px">
+          <Link to="/create" onClick={toggle}>
+            <Heading
+              as="h4"
+              fontSize="24px"
+              fontWeight="normal"
+              ml="25px"
+              color="whiteText"
+            >
               Create
             </Heading>
           </Link>
-          <Link to='/study' onClick={toggle}>
-            <Heading as='h4' fontSize='24px' fontWeight='normal' ml='25px' color='whiteText'>
+          <Link to="/study" onClick={toggle}>
+            <Heading
+              as="h4"
+              fontSize="24px"
+              fontWeight="normal"
+              ml="25px"
+              color="whiteText"
+            >
               Study
             </Heading>
           </Link>
-          <Link to='/practice' onClick={toggle}>
-            <Heading as='h4' fontSize='24px' fontWeight='normal' ml='25px' color='whiteText'>
-              Practice
-            </Heading>
-          </Link>
-          <Heading as='h4' fontSize='24px' fontWeight='normal' ml='25px' color='whiteText' onClick={toggle}>
+          <Heading
+            as="h4"
+            fontSize="24px"
+            fontWeight="normal"
+            ml="25px"
+            color="whiteText"
+            onClick={toggle}
+          >
             {isAuthenticated ? (
-              <Link to='/account'>Account</Link>
+              <Link to="/account">Account</Link>
             ) : (
-              <a href='/api/v1/oauth2/code/lichess' rel='noreferrer noopener'>
+              <a href="/api/v1/oauth2/code/lichess" rel="noreferrer noopener">
                 Login
               </a>
             )}
@@ -50,7 +89,7 @@ const MobileNavbar: FC = () => {
         </Box>
       </Collapse>
     </header>
-  )
-}
+  );
+};
 
-export default MobileNavbar
+export default MobileNavbar;
