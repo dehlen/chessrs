@@ -57,7 +57,7 @@ const RepertoireList: FC<Props> = ({
       </Heading>
       <VStack align="stretch">
         {repertoires.map((repertoire) => (
-          <HStack spacing="24px" w="320px">
+          <HStack spacing="24px" w="320px" key={repertoire.id}>
             <Flex pt={6} w="300px" h="50px" alignItems="center">
               <Text>{repertoire.name}</Text>
               <Flex w="20px" pl="10px">
