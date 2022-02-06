@@ -1,14 +1,14 @@
-import { useToast } from '@chakra-ui/react'
-import { FC, useCallback, useEffect } from 'react'
-import { gql, request } from 'graphql-request'
-import { setAccount } from 'store/userSlice'
-import { TOAST_DURATION } from 'theme'
-import { useAppDispatch } from 'utils/hooks'
-import ErrorToast from './ErrorToast'
+import { useToast } from "@chakra-ui/react";
+import { FC, useCallback, useEffect } from "react";
+import { gql, request } from "graphql-request";
+import { setAccount } from "store/userSlice";
+import { TOAST_DURATION } from "theme";
+import { useAppDispatch } from "utils/hooks";
+import ErrorToast from "./ErrorToast";
 
 const AccountManager: FC = () => {
-  const dispatch = useAppDispatch()
-  const toast = useToast()
+  const dispatch = useAppDispatch();
+  const toast = useToast();
 
   const getUserData = useCallback(async () => {
     try {
@@ -22,47 +22,51 @@ const AccountManager: FC = () => {
             scalingFactor
           }
         }
-      `
-      const data = await request('/api/v1/graphql', query)
+      `;
+      const data = await request("/api/v1/graphql", query);
       if (!data.account) {
-        console.log(data)
+        console.log(data);
         toast({
           duration: TOAST_DURATION,
           isClosable: true,
-          render: options => (
+          render: (options) => (
             <ErrorToast
-              description={`Error getting account data from server: ${data.errors[0].message}`}
+              description={`Error getting account data from server: ${
+                data?.errors?.[0]?.message ?? "Please try again later."
+              }`}
               onClose={options.onClose}
             />
-          )
-        })
-        return
+          ),
+        });
+        return;
       }
-      dispatch(setAccount(data.account))
+      dispatch(setAccount(data.account));
     } catch (e: any) {
       if (e.response) {
         toast({
           duration: TOAST_DURATION,
           isClosable: true,
-          render: options => (
+          render: (options) => (
             <ErrorToast
-              description={`Error getting account data from server: ${e.response.errors[0].message}`}
+              description={`Error getting account data from server: ${
+                e?.response?.errors?.[0]?.message ?? "Please try again later"
+              }`}
               onClose={options.onClose}
             />
-          )
-        })
+          ),
+        });
       } else {
         // Sign in with lichess
-        window.location.href = '/api/v1/oauth2/code/lichess'
+        window.location.href = "/api/v1/oauth2/code/lichess";
       }
     }
-  }, [dispatch, toast])
+  }, [dispatch, toast]);
 
   useEffect(() => {
-    getUserData()
-  }, [getUserData])
+    getUserData();
+  }, [getUserData]);
 
-  return <></>
-}
+  return <></>;
+};
 
-export default AccountManager
+export default AccountManager;

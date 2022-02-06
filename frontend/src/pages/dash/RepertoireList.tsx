@@ -8,18 +8,26 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { EditIcon } from "@chakra-ui/icons";
-import { useState } from "react";
+import { FC, useState } from "react";
 import { Repertoire } from "types";
 import AddRepertoire from "./AddRepertoire";
 import EditRepertoire from "./EditRepertoire";
 
-function RepertoireList({
+interface Props {
+  title: string;
+  repertoires: Repertoire[];
+  deleteRepertoire: (id: string) => void;
+  editRepertoire: (id: string, repertoire: Repertoire) => void;
+  addRepertoire: (repertoire: Repertoire) => void;
+}
+
+const RepertoireList: FC<Props> = ({
   title,
   repertoires,
   deleteRepertoire,
   editRepertoire,
   addRepertoire,
-}): JSX.Element {
+}): JSX.Element => {
   const [isAddRepertoireOpen, setIsAddRepertoireOpen] = useState(false);
   const [isEditRepertoireOpen, setIsEditRepertoireOpen] = useState(false);
   const [, setRepertoire] = useState<Repertoire>(null);
@@ -91,6 +99,6 @@ function RepertoireList({
       </Button>
     </Box>
   );
-}
+};
 
 export default RepertoireList;

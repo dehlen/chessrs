@@ -9,16 +9,25 @@ import {
   Button,
   Input,
 } from "@chakra-ui/react";
-import React, { useRef, useState } from "react";
+import React, { FC, useRef, useState } from "react";
+import { Repertoire } from "types";
+interface Props {
+  editRepertoire: (id: string, repertoire: Repertoire) => void;
+  deleteRepertoire: (id: string) => void;
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+  repertoire: Repertoire;
+  setRepertoire: (repertoire: Repertoire) => void;
+}
 
-function EditRepertoire({
+const EditRepertoire: FC<Props> = ({
   editRepertoire,
   deleteRepertoire,
   isOpen,
   setIsOpen,
   repertoire,
   setRepertoire,
-}) {
+}) => {
   const ref = useRef(null);
   const [name, setName] = useState(repertoire.name);
 
@@ -82,6 +91,6 @@ function EditRepertoire({
       </ModalContent>
     </Modal>
   );
-}
+};
 
 export default EditRepertoire;

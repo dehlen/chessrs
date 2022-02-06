@@ -1938,6 +1938,11 @@
     "@types/yargs" "^16.0.0"
     "chalk" "^4.0.0"
 
+"@mliebelt/pgn-parser@^1.4.3":
+  "integrity" "sha512-nXZlygmDpWpOH2gIfVBux5Jg4cpiLo9gUE+rJ9sK8hJx7zAQ7K1Jpl8yMNWNgdJWCMNo32WSkBusH1bGEfG/Sw=="
+  "resolved" "https://registry.npmjs.org/@mliebelt/pgn-parser/-/pgn-parser-1.4.3.tgz"
+  "version" "1.4.3"
+
 "@nodelib/fs.scandir@2.1.5":
   "integrity" "sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g=="
   "resolved" "https://registry.npmjs.org/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz"

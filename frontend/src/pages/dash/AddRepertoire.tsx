@@ -8,13 +8,27 @@ import {
   ModalCloseButton,
   Button,
   Input,
+  Text,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import { nanoid } from "nanoid";
 import { Repertoire } from "../../types";
+import { useFilePicker } from "use-file-picker";
+import { parse } from "@mliebelt/pgn-parser";
 
-function AddRepertoire({ addRepertoire, isOpen, setIsOpen }) {
+interface Props {
+  addRepertoire: (repertoire: Repertoire) => void;
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+}
+
+const AddRepertoire: FC<Props> = ({ addRepertoire, isOpen, setIsOpen }) => {
   const [name, setName] = useState("");
+  const [openFileSelector, { filesContent, clear }] = useFilePicker({
+    accept: ".pgn",
+    multiple: false,
+    readAs: "Text",
+  });
 
   function onClose() {
     setIsOpen(false);
@@ -27,14 +41,20 @@ function AddRepertoire({ addRepertoire, isOpen, setIsOpen }) {
   function handleSubmit(e) {
     e.preventDefault();
 
+    const games = filesContent.map((file) => {
+      return parse(file.content, { startRule: "games" });
+    });
+    console.log(games);
     const repertoire: Repertoire = {
       id: nanoid(),
       name: name,
+      games: games,
     };
 
     addRepertoire(repertoire);
     onClose();
   }
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -51,14 +71,30 @@ function AddRepertoire({ addRepertoire, isOpen, setIsOpen }) {
               placeholder="Repertoire Name..."
               onChange={handleNameChange}
             />
-            <Button
-              mt="10px"
-              colorScheme="orange"
-              variant="link"
-              onClick={() => console.log("TODO")}
-            >
-              Import PGN
-            </Button>
+            {filesContent.length === 0 ? (
+              <Button
+                mt="10px"
+                colorScheme="orange"
+                variant="link"
+                onClick={openFileSelector}
+              >
+                Import PGN
+              </Button>
+            ) : (
+              <Button
+                mt="10px"
+                colorScheme="orange"
+                variant="link"
+                onClick={clear}
+              >
+                Clear
+              </Button>
+            )}
+            {filesContent.map((file, index) => (
+              <Text color="whiteText" fontSize="14px">
+                {file.name}
+              </Text>
+            ))}
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="orange" mr={3} onClick={onClose}>
@@ -76,6 +112,6 @@ function AddRepertoire({ addRepertoire, isOpen, setIsOpen }) {
       </ModalContent>
     </Modal>
   );
-}
+};
 
 export default AddRepertoire;

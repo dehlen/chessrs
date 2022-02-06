@@ -1,3 +1,5 @@
+import { ParseTreeOrArray } from "@mliebelt/pgn-parser";
+
 export interface MoveEntity {
   fenBefore: string;
   san: string;
@@ -121,4 +123,5 @@ export interface LichessGame {
 export interface Repertoire {
   id: string;
   name: string;
+  games: ?ParseTreeOrArray[];
 }
